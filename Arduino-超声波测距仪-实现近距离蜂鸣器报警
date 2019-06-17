@@ -1,0 +1,30 @@
+volatile float dist;
+float checkdistance_A1_A3() {
+  digitalWrite(A1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(A1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(A1, LOW);
+  float distance = pulseIn(A3, HIGH) / 58.00;
+  delay(10);
+  return distance;
+}
+void setup(){
+  dist = 0;
+  pinMode(A1, OUTPUT);//超声波测距输出口
+  pinMode(A3, INPUT);//超声波测距输入口
+  Serial.begin(9600);
+  pinMode(2, OUTPUT);//蜂鸣器管脚口
+}
+
+void loop(){
+  dist = checkdistance_A1_A3();
+  Serial.print("1111");
+  Serial.println(dist);
+  delay(1000);
+  if (dist < 10) {     //设置距离小于10cm就预警
+    
+    Serial.print("1111");//检查是否出错
+    tone(4,100,1000);
+  }
+}
